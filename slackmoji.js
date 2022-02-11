@@ -5,16 +5,21 @@ const rl = readline.createInterface({
 });
 
 rl.question(`Provide a string to translate: `, (input) => {
-  console.log(slackTranslate(input));
+  pbcopy(slackTranslate(input));
   rl.close();
 });
 
-function slackTranslate(string) {
+function pbcopy(data) {
+    var proc = require('child_process').spawn('pbcopy'); 
+    proc.stdin.write(data); proc.stdin.end();
+}
+
+function slackTranslate(string, color='yellow') {
   return string
     .split("")
     .map((char) => {
-      if (/^\s*$/.test(char)) return ":white_square:";
-      else return `:alphabet-white-${char}:`;
+      if (/^\s*$/.test(char)) return ":panpog:";
+      else return `:alphabet-${color}-${char}:`;
     })
     .join("");
 }
